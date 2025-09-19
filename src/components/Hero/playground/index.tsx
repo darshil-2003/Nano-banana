@@ -4,8 +4,8 @@ import RightPanelOutput from "./output/RightpanelOutput";
 
 const Playground = () => {
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="content-stretch flex gap-[12px] sm:gap-[16px] items-center justify-start relative size-full flex-col lg:flex-row">
+    <div className="w-full px-4 sm:px-6 lg:px-8 lg:max-w-[1200px] lg:mx-auto ">
+      <div className="content-stretch flex gap-[8px] sm:gap-[12px] items-center justify-start relative size-full flex-col lg:flex-row ">
         {/* Left Panel - Input Controls */}
         <Input />
 

@@ -3,8 +3,8 @@ import CreationShowcaseItem from "./CreationShowcaseItem";
 
 const CreationShowcase = () => {
   return (
-    <div id="contact">
-      <div className="text-center mb-8 sm:mb-12 md:mb-16">
+    <div id="contact" className="relative z-10  ">
+      <div className="text-center mb-8 sm:mb-12 md:mb-16 overflow-hidden ">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[52px] font-semibold leading-tight mb-4 py-0 ">
           Your Next Creation Awaits
         </h2>
@@ -13,6 +13,7 @@ const CreationShowcase = () => {
           effects, and professional results — all in just a few clicks.
         </p>
       </div>
+      <></>
       <CreationShowcaseItem />
     </div>
   );

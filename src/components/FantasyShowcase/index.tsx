@@ -74,7 +74,7 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
   };
 
   return (
-    <div className={`py-10 md:py-16 lg:py-20 ${className}`}>
+    <div className={`py-10 md:py-16 lg:py-5 ${className} relative `}>
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-8 md:mb-12 lg:mb-16">
