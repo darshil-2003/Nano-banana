@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 import { PlusIcon } from "@/icons";
 
 const Faq = () => {
@@ -15,25 +17,44 @@ const Faq = () => {
   };
 
   return (
-    <div id="faq" className="relative z-10 py-10 ">
-      <div className="max-w-4xl mx-auto px-6  ">
-        <div className="text-center mb-10 ">
-          <div className="inline-flex items-center gap-2 bg-[#16101c] border border-[#9e67fa] rounded-full px-[17px] py-[3px] mb-4 shadow-[0px_0px_8px_0px_rgba(79,70,229,0.05)] ">
-            <span className="text-[14px] font-medium bg-gradient-to-b from-[#ecebfe] to-[#8d8d98] bg-clip-text text-transparent ">
+    <motion.div
+      id="faq"
+      className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32"
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={staggerContainer}
+    >
+      <div className="max-w-4xl mx-auto px-6">
+        <motion.div className="text-center mb-10" variants={staggerContainer}>
+          <motion.div
+            className="inline-flex items-center gap-2 bg-[#16101c] border border-[#9e67fa] rounded-full px-[17px] py-[3px] mb-4 shadow-[0px_0px_8px_0px_rgba(79,70,229,0.05)]"
+            variants={fadeInUp}
+          >
+            <span className="text-[14px] font-medium bg-gradient-to-b from-[#ecebfe] to-[#8d8d98] bg-clip-text text-transparent">
               FAQ
             </span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[52px] font-semibold leading-tight mb-4 ">
+          </motion.div>
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[52px] font-semibold leading-tight mb-4"
+            variants={fadeInUp}
+          >
             Your Questions, Answered
-          </h2>
-          <p className="text-white/50 text-sm sm:text-base md:text-lg xl:text-[18px] tracking-[0.36px]">
+          </motion.h2>
+          <motion.p
+            className="text-white/50 text-sm sm:text-base md:text-lg xl:text-[16px] tracking-[0.36px]"
+            variants={fadeInUp}
+          >
             From setup to advanced features, our FAQ section covers everything
             you need to know about Nano Banana AI. Quick, clear answers to guide
             you every step of the way.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="max-w-[700px] mx-auto space-y-3 py-10  ">
+        <motion.div
+          className="max-w-[700px] mx-auto space-y-3 py-10"
+          variants={fadeInUp}
+        >
           {[
             {
               question: "What is Nano Banana AI and how does it work?",
@@ -69,48 +90,63 @@ const Faq = () => {
             const isOpen = openItems.includes(index);
 
             return (
-              <div
+              <motion.div
                 key={index}
                 className="bg-white/5 border border-white/12 rounded-[14px] overflow-hidden transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               >
                 {/* Question Header */}
-                <button
+                <motion.button
                   onClick={() => toggleItem(index)}
                   className="w-full p-[18px] flex items-center justify-between cursor-pointer hover:bg-white/10 active:bg-white/10 focus:bg-white/10 transition-colors focus:outline-none"
                   aria-expanded={isOpen}
+                  whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <span className="text-white font-medium text-xs sm:text-sm xl:text-[14px] tracking-[-0.42px] text-left pr-2">
+                  <span className="text-white font-medium text-xs sm:text-sm xl:text-[16px] tracking-[-0.42px] text-left pr-2">
                     {faq.question}
                   </span>
-                  <div
-                    className={`w-5 h-5 flex items-center justify-center transition-transform duration-300 ${
-                      isOpen ? "rotate-45" : ""
-                    }`}
+                  <motion.div
+                    className="w-5 h-5 flex items-center justify-center"
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <PlusIcon />
-                  </div>
-                </button>
+                  </motion.div>
+                </motion.button>
 
                 {/* Answer Content */}
-                <div
-                  className={`transition-all duration-300 ease-in-out ${
-                    isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  } overflow-hidden`}
-                >
-                  <div className="px-[18px] pb-[18px] pt-0">
-                    <div className="border-t border-white/10 pt-4">
-                      <p className="text-white/70 text-xs sm:text-sm xl:text-[14px] leading-[22px] tracking-[-0.28px]">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-[18px] pb-[18px] pt-0">
+                        <div className="border-t border-white/10 pt-4">
+                          <motion.p
+                            className="text-white/70 text-xs sm:text-sm xl:text-[16px] leading-[22px] tracking-[-0.28px]"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, duration: 0.3 }}
+                          >
+                            {faq.answer}
+                          </motion.p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

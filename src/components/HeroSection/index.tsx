@@ -63,7 +63,7 @@ const HeroSection = () => {
   );
 
   return (
-    <div className="relative z-10 py-8 sm:py-12 md:py-16 overflow-hidden w-full">
+    <div className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden w-full">
       {/* 6-Image Flow - Full screen auto-scrolling layout */}
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-[24px] w-full">
         {/* First Row - Left to Right scroll */}

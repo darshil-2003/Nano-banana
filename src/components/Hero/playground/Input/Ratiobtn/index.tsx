@@ -25,11 +25,14 @@ const RatioButton = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isOpen]);
 
   const handleOptionSelect = (value: string) => {
     setAspectRatio(value);
@@ -37,25 +40,26 @@ const RatioButton = () => {
   };
 
   return (
-    <div className="bg-white/[0.02] border border-white/10 rounded-[114px] px-3 sm:px-4 py-2 sm:py-4 flex items-center justify-between hover:bg-white/10 transition-colors w-full relative">
+    <div
+      ref={dropdownRef}
+      className="bg-white/[0.02] border border-white/10 rounded-[114px] px-3 sm:px-4 py-2 sm:py-4 flex items-center justify-between hover:bg-white/10 transition-colors w-full relative cursor-pointer"
+      onClick={() => setIsOpen(!isOpen)}
+    >
       <div className="flex items-center gap-2 sm:gap-3">
         <AspectRatioIcon
           width={16}
           height={16}
           className="sm:w-5 sm:h-5 lg:w-[22px] lg:h-[22px]"
         />
-        <span className="text-[#ebf0ff] text-xs sm:text-sm lg:text-base">
+        <span className="text-[#ebf0ff] text-xs sm:text-sm lg:text-[16px]">
           Aspect Ratio
         </span>
       </div>
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-3 h-3 sm:w-4 sm:h-4 border border-white rounded" />
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="bg-transparent text-white text-xs sm:text-sm font-semibold tracking-wider border-none outline-none cursor-pointer flex items-center gap-1 hover:bg-white/5 transition-colors duration-200 rounded px-2 py-1"
-            >
+          <div className="relative">
+            <div className="bg-transparent text-white text-xs sm:text-sm lg:text-[16px] font-semibold tracking-wider flex items-center gap-1">
               {aspectRatio}
               <svg
                 className={`w-3 h-3 transition-transform duration-200 ${
@@ -67,18 +71,21 @@ const RatioButton = () => {
               >
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
-            </button>
+            </div>
 
             {isOpen && (
-              <div className="absolute top-full right-0 mt-1 bg-gray-800 border border-white/20 rounded-lg shadow-lg z-50 min-w-[80px]">
+              <div className="absolute top-full right-0 mt-1 bg-[#161617] border border-white/12 rounded-lg shadow-lg z-50 min-w-[80px] backdrop-blur-xl">
                 {options.map((option) => (
                   <button
                     key={option.value}
-                    onClick={() => handleOptionSelect(option.value)}
-                    className={`w-full text-left px-3 py-2 text-xs sm:text-sm font-semibold tracking-wider transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg ${
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOptionSelect(option.value);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-xs sm:text-sm lg:text-[16px] font-semibold tracking-wider transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg ${
                       aspectRatio === option.value
                         ? "bg-white/20 text-white"
-                        : "text-gray-300 hover:bg-white/10 hover:text-white"
+                        : "text-white/70 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {option.label}

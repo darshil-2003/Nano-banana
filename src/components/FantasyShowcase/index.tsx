@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/utils/animations";
 import Image from "next/image";
 
 export interface FantasyShowcaseProps {
@@ -74,24 +76,42 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
   };
 
   return (
-    <div className={`py-10 md:py-16 lg:py-5 ${className} relative `}>
+    <motion.div
+      className={`py-16 sm:py-20 md:py-24 lg:py-32 ${className} relative`}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={staggerContainer}
+    >
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#16101c] border  border-[#9e67fa] rounded-full px-3 py-1 mb-3 md:mb-4">
+        <motion.div
+          className="text-center mb-8 md:mb-12 lg:mb-16"
+          variants={staggerContainer}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 bg-[#16101c] border  border-[#9e67fa] rounded-full px-3 py-1 mb-3 md:mb-4"
+            variants={fadeInUp}
+          >
             <span className="text-xs md:text-sm font-medium bg-gradient-to-b from-[#ecebfe] to-[#8d8d98] bg-clip-text text-transparent">
               AI Generated Art
             </span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-3 md:mb-4">
+          </motion.div>
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-3 md:mb-4"
+            variants={fadeInUp}
+          >
             Fantasy Art Gallery
-          </h2>
-          <p className="text-white/50 text-sm sm:text-base md:text-lg max-w-4xl mx-auto px-4">
+          </motion.h2>
+          <motion.p
+            className="text-white/50 text-sm sm:text-base md:text-lg xl:text-[16px] max-w-4xl mx-auto px-4"
+            variants={fadeInUp}
+          >
             Discover the magic of AI-generated fantasy art. Each piece tells a
             unique story, crafted with precision and creativity using advanced
             AI technology.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Fantasy Images Horizontal Flow */}
         <div className="overflow-hidden w-full">
@@ -125,10 +145,12 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
                         aria-hidden="true"
                         className="absolute border border-[rgba(221,221,221,0.1)] border-solid inset-0 pointer-events-none rounded-[2px] sm:rounded-[3px] lg:rounded-[4px]"
                       />
-                      <button
+                      <motion.button
                         onClick={() => handleCopyPrompt(image.prompt)}
                         className="relative shrink-0 size-3 sm:size-4 lg:size-[16px] flex items-center justify-center"
                         title="Copy prompt"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                       >
                         <Image
                           src="/images/inspiration/copy-icon.svg"
@@ -137,7 +159,7 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
                           height={16}
                           className="w-3 h-3 sm:w-4 sm:h-4"
                         />
-                      </button>
+                      </motion.button>
                     </div>
                   </div>
                   <div
@@ -150,7 +172,7 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

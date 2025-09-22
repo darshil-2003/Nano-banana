@@ -5,7 +5,7 @@ const RightPanelOutput = () => {
     <div className="flex flex-row items-center self-stretch w-full justify-center ">
       <div className="backdrop-blur-[2px] backdrop-filter bg-[rgba(255,255,255,0.1)] h-[300px] sm:h-[400px] md:h-[500px] lg:h-full relative rounded-[24px] sm:rounded-[32px] shrink-0 w-full lg:max-w-[530px] p-0">
         <div className="box-border content-stretch flex gap-[10px] h-full items-center justify-center overflow-clip px-[20px] sm:px-[80px] md:px-[120px] lg:px-[156px] py-[120px] sm:py-[180px] md:py-[px] lg:py-[248px] relative w-full ">
-          <div className="flex flex-col font-['Mona_Sans:SemiBold',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] sm:text-[16px] text-nowrap text-zinc-400 text-center">
+          <div className="flex flex-col font-['Mona_Sans:SemiBold',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[16px] sm:text-[16px] text-nowrap text-zinc-400 text-center">
             <p className="leading-[normal] whitespace-pre">
               Try AI Image Generator Now
             </p>

@@ -48,3 +48,19 @@ html {
 .animate-scroll-right {
   animation: scrollRight 62s linear infinite;
 }
+
+/* Mobile menu slide in animation */
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mobile-menu-slide {
+  animation: slideInFromTop 0.4s ease-out forwards;
+}

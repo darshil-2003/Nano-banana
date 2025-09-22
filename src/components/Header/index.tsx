@@ -1,12 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { fadeInDown, fadeInLeft } from "@/utils/animations";
 import { NanoBananaIcon } from "@/icons";
+import { useActiveSection } from "@/hooks/useActiveSection";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const activeSection = useActiveSection();
+
+  // Handle scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileMenuOpen]);
   return (
-    <header className="backdrop-blur-[4.75px] bg-[rgba(7,6,16,0.2)] border-b border-white/5 px-4 sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px]">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 sm:gap-3">
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-[9999] border-b border-white/5 px-4 sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 ${
+        isScrolled
+          ? "bg-[#161617]/60 backdrop-blur-xl border-white/10"
+          : "bg-transparent"
+      }`}
+      variants={fadeInDown}
+      initial="initial"
+      animate="animate"
+    >
+      <div className="flex items-center  relative z-[9999] justify-between">
+        <motion.div
+          className="flex items-center gap-2 sm:gap-3"
+          variants={fadeInLeft}
+        >
           <NanoBananaIcon
             width={24}
             height={24}
@@ -15,46 +57,73 @@ const Header = () => {
           <span className="text-base sm:text-lg lg:text-[25px] font-bold text-[#ece5ff] w-[120px] sm:w-[150px] lg:w-[170px]">
             Photoeditbytext
           </span>
-        </div>
+        </motion.div>
 
-        <nav className="hidden sm:flex items-center gap-4 md:gap-8 lg:gap-[75px] text-white font-semibold text-sm md:text-[16px] backdrop-blur-[22px] rounded-[999px] px-0 py-[16px]">
-          <a
+        <motion.nav
+          className="hidden sm:flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-[60px] text-white/50 font-medium capitalize text-sm sm:text-base md:text-lg xl:text-[16px] tracking-[0.5px] whitespace-nowrap"
+          variants={fadeInDown}
+        >
+          <motion.a
             href="#hero"
-            className="hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity"
+            className={`transition-colors ${
+              activeSection === "hero" ? "text-white" : "hover:text-white"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Home
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href="#how-it-works"
-            className="opacity-40 hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity"
+            className={`transition-colors ${
+              activeSection === "how-it-works"
+                ? "text-white"
+                : "hover:text-white"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            How It Works
-          </a>
-          <a
+            how it works
+          </motion.a>
+          <motion.a
             href="#features"
-            className="opacity-40 hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity"
+            className={`transition-colors ${
+              activeSection === "features" ? "text-white" : "hover:text-white"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Features
-          </a>
-          <a
+            features
+          </motion.a>
+          <motion.a
             href="#faq"
-            className="opacity-40 hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity"
+            className={`transition-colors ${
+              activeSection === "faq" ? "text-white" : "hover:text-white"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            FAQ
-          </a>
-          <a
+            faq
+          </motion.a>
+          <motion.a
             href="#contact"
-            className="opacity-40 hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity"
+            className={`transition-colors ${
+              activeSection === "contact" ? "text-white" : "hover:text-white"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Contact Us
-          </a>
-        </nav>
+          </motion.a>
+        </motion.nav>
 
         {/* Mobile menu button */}
-        <button
+        <motion.button
           className="sm:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle mobile menu"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
           {mobileMenuOpen ? (
             <svg
@@ -85,7 +154,7 @@ const Header = () => {
               />
             </svg>
           )}
-        </button>
+        </motion.button>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -93,129 +162,56 @@ const Header = () => {
         <>
           {/* Background Overlay */}
           <div
-            className="sm:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="sm:hidden relative inset-0 bg-black/60 backdrop-blur-sm "
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          {/* Sidebar Menu */}
-          <div className="sm:hidden fixed top-0 left-0 w-80 h-full bg-black/95 backdrop-blur-md z-50 transform transition-transform duration-300 ease-in-out">
-            {/* Menu Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <div className="flex items-center gap-3">
-                <NanoBananaIcon width={32} height={32} className="text-white" />
-                <span className="text-white text-xl font-bold">
-                  Nano Banana
-                </span>
-              </div>
-            </div>
-
+          {/* Mobile Menu */}
+          <div className="sm:hidden fixed left-0 right-0 top-[50px] w-full bg-black  overflow-hidden shadow-2xl mobile-menu-slide z-[9999]">
             {/* Navigation Items */}
-            <nav className="flex flex-col p-6 space-y-6">
-              <a
-                href="#hero"
-                className="text-white font-semibold text-lg hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity py-3 flex items-center justify-between"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Home
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            <nav className="flex flex-col p-6 space-y-2">
+              {[
+                { href: "#hero", label: "Home", id: "hero" },
+                {
+                  href: "#how-it-works",
+                  label: "How It Works",
+                  id: "how-it-works",
+                },
+                { href: "#features", label: "Features", id: "features" },
+                { href: "#faq", label: "FAQ", id: "faq" },
+                { href: "#contact", label: "Contact Us", id: "contact" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={`font-medium text-[16px] py-4 px-4 rounded-xl bg-transparent hover:bg-white/10 border border-transparent hover:border-white/20 transition-all duration-300 flex items-center justify-between ${
+                    activeSection === item.id
+                      ? "text-white"
+                      : "text-white/50 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#how-it-works"
-                className="text-white font-semibold text-lg hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity py-3 flex items-center justify-between"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                How It Works
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#features"
-                className="text-white font-semibold text-lg hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity py-3 flex items-center justify-between"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Features
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#faq"
-                className="text-white font-semibold text-lg hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity py-3 flex items-center justify-between"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                FAQ
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#contact"
-                className="text-white font-semibold text-lg hover:opacity-80 active:opacity-80 focus:opacity-80 transition-opacity py-3 flex items-center justify-between"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact Us
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
+                  <span>{item.label}</span>
+                  <svg
+                    className="w-5 h-5 opacity-60"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              ))}
             </nav>
           </div>
         </>
       )}
-    </header>
+    </motion.header>
   );
 };
 
