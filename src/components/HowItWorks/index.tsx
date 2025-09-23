@@ -39,7 +39,7 @@ const HowItWorks = () => {
         </motion.div>
 
         <motion.div
-          className="flex flex-col md:flex-row items-start justify-center gap-8 md:gap-4 lg:gap-8 xl:gap-0 w-[89%] mx-auto"
+          className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 lg:gap-8 xl:gap-0 w-[89%] mx-auto"
           variants={staggerContainer}
         >
           {[1, 2, 3].map((step, index) => (
@@ -47,6 +47,9 @@ const HowItWorks = () => {
               key={step}
               className="flex flex-col items-center justify-start flex-1 text-center relative px-0 md:px-4 lg:px-8 xl:px-[60px]"
               variants={staggerItem}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="bg-white/10 border border-white/20 rounded-[42px] w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[60px] lg:h-[60px] flex items-center justify-center mb-6">
                 {step === 1 && (

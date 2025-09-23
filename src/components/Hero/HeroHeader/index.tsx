@@ -11,7 +11,7 @@ const HeroHeader = () => {
       animate="animate"
     >
       <motion.div
-        className="font-['Mona_Sans:SemiBold',_sans-serif] min-w-full relative shrink-0 text-[60px] text-white tracking-[1.2px]"
+        className="font-['Mona_Sans:Bold',_sans-serif] min-w-full relative shrink-0 text-[60px] text-white tracking-[1.2px]"
         style={{ width: "min-content" }}
         variants={fadeInUp}
       >

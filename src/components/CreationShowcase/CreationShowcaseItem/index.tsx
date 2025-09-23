@@ -12,11 +12,31 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [screenWidth, setScreenWidth] = useState<number>(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Dynamic width detection
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    // Set initial width
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Determine if only 3 images should be shown (between 1024px to 1300px)
+  const shouldShowOnlyThreeImages = screenWidth >= 1024 && screenWidth <= 1300;
 
   const creationImages = [
     {
@@ -84,7 +104,7 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
   return (
     <div
       className={`py-8 sm:py-12 md:py-16 lg:py-0 ${className} 
-        overflow-hidden relative z-10 xl:h-[400px] h-[150px] `}
+        overflow-hidden relative z-10 lg:h-[400px] md:h-[250px] h-[150px] `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -92,7 +112,7 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
         {/* Mobile & Tablet: Fan arrangement with 3 images */}
         <div className="block lg:hidden">
           <div
-            className="absolute w-full md:h-70 h-48 max-w-[600px] sm:max-w-[800px] md:max-w-[1000px] mx-auto inset-0  top-5 z-0 group"
+            className="absolute w-full md:h-70   h-48  max-w-[600px] sm:max-w-[800px] md:max-w-[1000px] mx-auto inset-0  top-5  z-0 group"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -109,7 +129,7 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
                       : "opacity-0 translate-y-8 scale-95"
                   } ${
                     image.id === "2" || image.id === "3"
-                      ? "top-[31.4%] md:top-[12.4%]"
+                      ? "top-[20.4%] md:top-[30.4%]"
                       : ""
                   }`}
                   style={{
@@ -163,63 +183,65 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
         {/* Desktop: Show all 5 images in fan arrangement */}
         <div className="hidden lg:block h-96 z-10">
           <div
-            className="absolute w-full h-[660px] inset-0 top-10 max-w-[1200px] mx-auto z-0 group "
+            className="absolute w-full h-[660px] inset-0 top-10  max-w-[1200px] mx-auto z-0 group "
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {creationImages.map((image) => (
-              <div
-                key={image.id}
-                className={`absolute w-[376.505px] h-[392.955px] rounded-[24.369px] overflow-hidden bg-transparent shadow-[0_10px_30px_rgba(128,0,128,0.5)] border-2 border-white/20 flex-shrink-0 cursor-pointer transition-all duration-700 ease-out ${
-                  isVisible
-                    ? "opacity-100 translate-y-0 scale-100"
-                    : "opacity-0 translate-y-8 scale-95"
-                }`}
-                style={{
-                  rotate: `${
-                    isHovered ? image.hoverRotation : image.rotation
-                  }deg`,
-                  transform: `translate(${
-                    isHovered ? image.hoverTransform.translateX : 0
-                  }px, ${isHovered ? image.hoverTransform.translateY : 0}px)`,
-                  zIndex: image.zIndex,
-                  transitionDelay: isHovered ? "0ms" : "0ms",
-                  left: image.position.left,
-                  top: image.position.top,
-                }}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover transition-opacity duration-300 "
-                />
+            {creationImages
+              .slice(0, shouldShowOnlyThreeImages ? 3 : 5)
+              .map((image) => (
+                <div
+                  key={image.id}
+                  className={`absolute w-[376.505px] h-[392.955px] rounded-[24.369px] overflow-hidden bg-transparent shadow-[0_10px_30px_rgba(128,0,128,0.5)] border-2 border-white/20 flex-shrink-0 cursor-pointer transition-all duration-700 ease-out ${
+                    isVisible
+                      ? "opacity-100 translate-y-0 scale-100"
+                      : "opacity-0 translate-y-8 scale-95"
+                  }`}
+                  style={{
+                    rotate: `${
+                      isHovered ? image.hoverRotation : image.rotation
+                    }deg`,
+                    transform: `translate(${
+                      isHovered ? image.hoverTransform.translateX : 0
+                    }px, ${isHovered ? image.hoverTransform.translateY : 0}px)`,
+                    zIndex: image.zIndex,
+                    transitionDelay: isHovered ? "0ms" : "0ms",
+                    left: image.position.left,
+                    top: image.position.top,
+                  }}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover transition-opacity duration-300 "
+                  />
 
-                {/* Center card glow effect */}
-                {image.isCenter && (
-                  <div className="absolute inset-0 rounded-[24.369px] bg-gradient-to-r from-purple-500/30 via-transparent to-blue-500/30 pointer-events-none" />
-                )}
+                  {/* Center card glow effect */}
+                  {image.isCenter && (
+                    <div className="absolute inset-0 rounded-[24.369px] bg-gradient-to-r from-purple-500/30 via-transparent to-blue-500/30 pointer-events-none" />
+                  )}
 
-                {/* Floating particle effect for center card */}
-                {image.isCenter && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(8)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-purple-400 rounded-full animate-float-particles"
-                        style={{
-                          left: `${15 + i * 12}%`,
-                          top: `${20 + i * 8}%`,
-                          animationDelay: `${i * 0.3}s`,
-                          animationDuration: `${2.5 + i * 0.2}s`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                  {/* Floating particle effect for center card */}
+                  {image.isCenter && (
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(8)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute w-1 h-1 bg-purple-400 rounded-full animate-float-particles"
+                          style={{
+                            left: `${15 + i * 12}%`,
+                            top: `${20 + i * 8}%`,
+                            animationDelay: `${i * 0.3}s`,
+                            animationDuration: `${2.5 + i * 0.2}s`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>

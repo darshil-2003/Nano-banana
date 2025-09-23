@@ -102,6 +102,9 @@ const Features = () => {
               key={feature.id}
               className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.12)] rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[40px]"
               variants={staggerItem}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="flex flex-col lg:flex-row h-full">
                 {/* Content Section */}
@@ -148,7 +151,7 @@ const Features = () => {
                       : "lg:order-2"
                   }`}
                 >
-                  <div className="bg-white rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px] h-[250px] sm:h-[300px] md:h-[390px] lg:h-[430px] lg:w-[550px]  flex items-center justify-center shadow-lg  m-2 "></div>
+                  <div className="bg-white rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px] h-[250px] sm:h-[300px] md:h-[390px] lg:h-[430px] lg:w-[550px]  flex items-center justify-center shadow-lg  m-1 md:m-2 "></div>
                 </div>
               </div>
             </motion.div>
