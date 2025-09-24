@@ -38,9 +38,45 @@ const HeroSection = () => {
       alt: "Wild West Landscape 6",
       prompt: "A sweeping, cinematic shot of the wild west",
     },
+    {
+      id: "wild-west-7",
+      url: "/images/inspiration/wild-west-7.png",
+      alt: "Wild West Landscape 7",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
+    {
+      id: "wild-west-9",
+      url: "/images/inspiration/wild-west-9.png",
+      alt: "Wild West Landscape 9",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
+    {
+      id: "wild-west-10",
+      url: "/images/inspiration/wild-west-10.png",
+      alt: "Wild West Landscape 10",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
+    {
+      id: "wild-west-11",
+      url: "/images/inspiration/wild-west-11.png",
+      alt: "Wild West Landscape 11",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
+    {
+      id: "wild-west-13",
+      url: "/images/inspiration/wild-west-13.png",
+      alt: "Wild West Landscape 13",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
+    {
+      id: "wild-west-14",
+      url: "/images/inspiration/wild-west-14.png",
+      alt: "Wild West Landscape 14",
+      prompt: "A sweeping, cinematic shot of the wild west",
+    },
   ];
 
-  // Using all 6 images for continuous flowing animation
+  // Using all 12 unique images for continuous flowing animation
 
   const ImageCard = ({
     image,
@@ -64,26 +100,101 @@ const HeroSection = () => {
 
   return (
     <div className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden w-full">
-      {/* 6-Image Flow - Full screen auto-scrolling layout */}
+      {/* 12-Loop Flow - Full screen auto-scrolling layout */}
       <div className="flex flex-col gap-4 sm:gap-6 md:gap-[24px] w-full">
         {/* First Row - Left to Right scroll */}
         <div className="relative w-full overflow-hidden">
           <div
             className="flex gap-4 sm:gap-6 md:gap-[24px] animate-scroll-left will-change-transform"
-            style={{ width: "200%" }}
+            style={{ width: "400%" }}
           >
-            {/* All 6 images for continuous flow */}
+            {/* Original Set - Loops 1, 2, 3 */}
             {inspirationImages.map((image, index) => (
               <ImageCard
-                key={`left-first-${index}`}
+                key={`left-original-${index}`}
                 image={image}
                 index={index}
               />
             ))}
-            {/* Duplicate for seamless loop */}
             {inspirationImages.map((image, index) => (
               <ImageCard
-                key={`left-second-${index}`}
+                key={`left-original-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-original-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Duplicate Set - Loops 4, 5, 6 */}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Second Duplicate Set - Loops 7, 8, 9 */}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate2-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate2-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate2-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Third Duplicate Set - Loops 10, 11, 12 */}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate3-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate3-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {inspirationImages.map((image, index) => (
+              <ImageCard
+                key={`left-duplicate3-3-${index}`}
                 image={image}
                 index={index}
               />
@@ -95,20 +206,131 @@ const HeroSection = () => {
         <div className="relative w-full overflow-hidden">
           <div
             className="flex gap-4 sm:gap-6 md:gap-[24px] animate-scroll-right will-change-transform"
-            style={{ width: "200%" }}
+            style={{ width: "400%" }}
           >
-            {/* All 6 images in reverse order */}
-            {[...inspirationImages].reverse().map((image, index) => (
+            {/* Third Duplicate Set - Loops 12, 11, 10 (offset by 6 to avoid same image) */}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
               <ImageCard
-                key={`right-first-${index}`}
+                key={`right-duplicate3-3-${index}`}
                 image={image}
                 index={index}
               />
             ))}
-            {/* Duplicate for seamless loop */}
-            {[...inspirationImages].reverse().map((image, index) => (
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
               <ImageCard
-                key={`right-second-${index}`}
+                key={`right-duplicate3-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate3-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Second Duplicate Set - Loops 9, 8, 7 (offset by 6 to avoid same image) */}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate2-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate2-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate2-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Duplicate Set - Loops 6, 5, 4 (offset by 6 to avoid same image) */}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-duplicate-1-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+
+            {/* Original Set - Loops 3, 2, 1 (offset by 6 to avoid same image) */}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-original-3-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-original-2-${index}`}
+                image={image}
+                index={index}
+              />
+            ))}
+            {[
+              ...inspirationImages.slice(6, 12),
+              ...inspirationImages.slice(0, 6),
+            ].map((image, index) => (
+              <ImageCard
+                key={`right-original-${index}`}
                 image={image}
                 index={index}
               />
