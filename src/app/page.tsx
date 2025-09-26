@@ -22,7 +22,7 @@ export default function LandingPageV2() {
       variants={pageVariants}
       transition={{ type: "tween", ease: "anticipate", duration: 0.5 }}
     >
-      <div className="bg-[#08020e] text-white min-h-screen relative overflow-x-hidden pt-[80px] sm:pt-[90px]">
+      <div className="bg-[#08020e] text-white min-h-screen  overflow-x-hidden pt-[80px] sm:pt-[90px]">
         {/* Background Effects */}
         <motion.div
           className="fixed inset-0 pointer-events-none"

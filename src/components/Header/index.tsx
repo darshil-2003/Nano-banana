@@ -35,7 +35,7 @@ const Header = () => {
   }, [mobileMenuOpen]);
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-[9999] border-b border-white/5 px-4 sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9998] border-b  border-white/5  sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 ${
         isScrolled
           ? "bg-[#161617]/60 backdrop-blur-xl border-white/10"
           : "bg-transparent"
@@ -162,14 +162,14 @@ const Header = () => {
         <>
           {/* Background Overlay */}
           <div
-            className="sm:hidden relative inset-0 bg-black/60 backdrop-blur-sm "
+            className="sm:hidden relative  z-[9999]  h-full  bg-black/60 backdrop-blur-sm w-full"
             onClick={() => setMobileMenuOpen(false)}
           />
 
           {/* Mobile Menu */}
-          <div className="sm:hidden fixed left-0 right-0 top-[50px] w-full bg-black  overflow-hidden shadow-2xl mobile-menu-slide z-[9999]">
+          <div className="sm:hidden  w-full bg-black    overflow-hidden shadow-2xl mobile-menu-slide z-[9999] h-full mt-[25px] ">
             {/* Navigation Items */}
-            <nav className="flex flex-col p-6 space-y-2">
+            <nav className="flex flex-col p-0 space-y-2 h-screen inset-0 w-full">
               {[
                 { href: "#hero", label: "Home", id: "hero" },
                 {
