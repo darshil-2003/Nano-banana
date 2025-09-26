@@ -35,7 +35,7 @@ const Header = () => {
   }, [mobileMenuOpen]);
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-[9998] border-b  border-white/5  sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9998] border-b  border-white/5  sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 mx-5 sm:mx-0 ${
         isScrolled
           ? "bg-[#161617]/60 backdrop-blur-xl border-white/10"
           : "bg-transparent"
