@@ -8,10 +8,14 @@ const RatioButton = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const options = [
-    { value: "1:1", label: "1:1" },
-    { value: "16:9", label: "16:9" },
-    { value: "4:3", label: "4:3" },
-    { value: "3:4", label: "3:4" },
+    { value: "1:1", label: "1:1", width: "20px", height: "20px" },
+    { value: "5:6", label: "5:6", width: "17.64px", height: "20px" },
+    { value: "6:5", label: "6:5", width: "20px", height: "17.64px" },
+    { value: "4:5", label: "4:5", width: "15.55px", height: "20px" },
+    { value: "5:4", label: "5:4", width: "20px", height: "15.55px" },
+    { value: "3:4", label: "3:4", width: "16.47px", height: "20px" },
+    { value: "4:3", label: "4:3", width: "20px", height: "16.47px" },
+    { value: "2:3", label: "2:3", width: "13.67px", height: "20px" },
   ];
 
   // Close dropdown when clicking outside
@@ -74,23 +78,34 @@ const RatioButton = () => {
             </div>
 
             {isOpen && (
-              <div className="absolute top-full right-0 mt-1 bg-[#161617] border border-white/12 rounded-lg shadow-lg z-50 min-w-[80px] backdrop-blur-xl">
-                {options.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleOptionSelect(option.value);
-                    }}
-                    className={`w-full text-left px-3 py-2 text-xs sm:text-sm lg:text-[16px] font-semibold tracking-wider transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg ${
-                      aspectRatio === option.value
-                        ? "bg-white/20 text-white"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
+              <div className="absolute top-full right-0 mt-1 bg-[#161617] border border-white/12 rounded-lg shadow-lg z-50 min-w-[320px] backdrop-blur-xl p-2">
+                <div className="grid grid-cols-2 gap-1">
+                  {options.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOptionSelect(option.value);
+                      }}
+                      className={`flex items-center gap-2 px-3 py-2 text-xs sm:text-sm lg:text-[14px] font-normal transition-colors duration-200 rounded ${
+                        aspectRatio === option.value
+                          ? "bg-white/20 text-white"
+                          : "text-[#c2c1c3] hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      <div className="flex items-center justify-center p-[2px] w-6 h-6">
+                        <div
+                          className="border-2 border-[#c2c1c3] rounded-[2px]"
+                          style={{
+                            width: option.width,
+                            height: option.height,
+                          }}
+                        />
+                      </div>
+                      <span>{option.label}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
