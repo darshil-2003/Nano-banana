@@ -1,8 +1,11 @@
+"use client";
+
 import { MagicWandIcon, DuplicateIcon } from "@/icons";
-import React, { useState } from "react";
+import React from "react";
+import { useGenerate } from "@/contexts/GenerateContext";
 
 const PromptHero = () => {
-  const [prompt, setPrompt] = useState("");
+  const { prompt, setPrompt } = useGenerate();
 
   const handleMagicClick = () => {
     // Add magic prompt enhancement logic here
@@ -26,7 +29,9 @@ const PromptHero = () => {
 
       <textarea
         value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
+        onChange={(e) => {
+          setPrompt(e.target.value);
+        }}
         placeholder="Enter prompt here"
         className="bg-transparent border-none outline-none resize-none w-full h-full text-white placeholder-[rgba(255,255,255,0.6)] font-['Mona_Sans:Regular',_sans-serif] text-[16px] leading-[24px] transition-all duration-300 focus:placeholder-[rgba(255,255,255,0.8)]"
         rows={6}

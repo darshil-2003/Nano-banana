@@ -366,6 +366,57 @@ export const CheckIcon: React.FC<IconProps> = ({
     </svg>
   );
 };
-
+export const CloseIcon: React.FC<IconProps> = () => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <foreignObject x="-20" y="-20" width="72" height="72">
+      <div
+        style={{
+          backdropFilter: "blur(10px)",
+          clipPath: "url(#bgblur_0_117_1077_clip_path)",
+          height: "100%",
+          width: "100%",
+        }}
+      ></div>
+    </foreignObject>
+    <g data-figma-bg-blur-radius="20">
+      <rect width="32" height="32" rx="16" fill="black" fill-opacity="0.4" />
+      <rect
+        x="0.25"
+        y="0.25"
+        width="31.5"
+        height="31.5"
+        rx="15.75"
+        stroke="white"
+        stroke-opacity="0.2"
+        stroke-width="0.5"
+      />
+      <path
+        d="M11.7573 11.7574L20.2426 20.2426"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11.7574 20.2426L20.2427 11.7574"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="bgblur_0_117_1077_clip_path" transform="translate(20 20)">
+        <rect width="32" height="32" rx="16" />
+      </clipPath>
+    </defs>
+  </svg>
+);
 // Export all icons
 export * from "./index";

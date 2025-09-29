@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useGenerate } from "@/hooks/useGenerate";
+import { useGenerate } from "@/contexts/GenerateContext";
 import { AspectRatioIcon } from "@/icons";
 
 const RatioButton = () => {
