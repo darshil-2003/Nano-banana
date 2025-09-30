@@ -2,8 +2,8 @@ import React from "react";
 import ImageUpload from "./ImageUpload";
 import PromptHero from "./PromptHero";
 import Model from "./Model";
-import RatioButton from "./Ratiobtn";
-import GenerateButton from "./Genratebtn";
+import RatioButton from "./RatioButton";
+import GenerateButton from "./GenerateButton";
 
 const Input = () => {
   return (

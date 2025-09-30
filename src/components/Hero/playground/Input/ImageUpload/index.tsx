@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { useHandleFile } from "@/hooks/useHandleFIle";
+import { useHandleFile } from "@/hooks/useHandleFile";
 import { useGenerate } from "@/contexts/GenerateContext";
-import { useToast } from "@/contexts/ToastContext";
 import { UploadIcon, CloseIcon } from "@/icons";
 
 import Loader from "@/components/Loader";
@@ -12,21 +11,18 @@ import Loader from "@/components/Loader";
 const ImageUpload = () => {
   const { dragActive, setDragActive, handleDrag } = useHandleFile();
   const { selectedImage, setSelectedImage } = useGenerate();
-  const { showToast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const validateImage = (file: File): boolean => {
     // Check file type
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      showToast("Please upload a valid image file (JPG, PNG, WebP)", "error");
       return false;
     }
 
     // Check file size (max 10MB)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      showToast("Image size should be less than 10MB", "error");
       return false;
     }
 
@@ -45,10 +41,8 @@ const ImageUpload = () => {
     try {
       // Simulate image processing time
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      showToast("Image uploaded successfully!", "success");
     } catch {
-      showToast("Failed to upload image. Please try again.", "error");
+      // Handle error silently
     } finally {
       setIsProcessing(false);
     }
@@ -118,7 +112,7 @@ const ImageUpload = () => {
 
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-2 -right-15 sm:-right-35 lg:-right-27 text-white bg-black/50 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold transition-colors z-50 shadow-lg"
+              className="absolute top-2 -right-15 sm:-right-35 lg:-right-27 text-white bg-black/30 rounded-[10px] w-8 h-8 flex items-center justify-center text-sm font-bold transition-colors z-50 shadow-lg"
             >
               <CloseIcon />
             </button>

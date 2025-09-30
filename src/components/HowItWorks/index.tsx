@@ -57,7 +57,7 @@ const HowItWorks = () => {
                     width={25}
                     height={24}
                     color="white"
-                    className="md:w-7 md:h-7 lg:w-[25px] lg:h-[24px]"
+                    className="md:w-7 md:h-7 lg:w-[25px] lg:h-[24px] "
                   />
                 )}
                 {step === 2 && (

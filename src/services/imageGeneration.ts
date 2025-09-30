@@ -33,33 +33,37 @@ export interface GenerationState {
   progress?: number;
 }
 
+import axios from "axios";
+
 export const generateImage = async (
   request: ImageGenerationRequest
 ): Promise<ImageGenerationResponse> => {
   try {
-    const response = await fetch("https://api.chromastudio.ai/image-gen", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "sec-ch-ua-platform": "Windows",
-        "x-project-id": "maxStudio",
-        Referer: "https://www.maxstudio.ai/",
-        "sec-ch-ua": "Chromium;v=140, Not=A?Brand;v=24, Google",
-        "sec-ch-ua-mobile": "?0",
-      },
-      body: JSON.stringify(request),
-    });
+    const response = await axios.post(
+      "https://api.chromastudio.ai/image-gen",
+      request,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-project-id": "maxStudio",
+        },
+      }
+    );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
     return {
       success: true,
-      data,
+      data: response.data,
     };
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        error:
+          error.response?.data?.message ||
+          error.message ||
+          "Network error occurred",
+      };
+    }
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",

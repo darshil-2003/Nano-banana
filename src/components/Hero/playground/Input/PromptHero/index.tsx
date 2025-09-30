@@ -1,22 +1,68 @@
 "use client";
 
 import { MagicWandIcon, DuplicateIcon } from "@/icons";
-import React from "react";
+import React, { useState } from "react";
 import { useGenerate } from "@/contexts/GenerateContext";
+import { useToast } from "@/contexts/ToastContext";
+import Loader from "@/components/Loader";
+import axios from "axios";
 
 const PromptHero = () => {
   const { prompt, setPrompt } = useGenerate();
+  const { showToast } = useToast();
+  const [isEnhancing, setIsEnhancing] = useState(false);
 
-  const handleMagicClick = () => {
-    // Add magic prompt enhancement logic here
-    console.log("Magic wand clicked!");
+  const handleMagicClick = async () => {
+    if (!prompt.trim()) {
+      showToast("Please enter a prompt to enhance", "error");
+      return;
+    }
+
+    setIsEnhancing(true);
+
+    try {
+      const response = await axios.post(
+        "https://api.chromastudio.ai/prompt-enhancer",
+        {
+          prompt: prompt.trim(),
+          toolType: "textToImage",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.enhancedPrompt) {
+        setPrompt(response.data.enhancedPrompt);
+        showToast("Prompt enhanced successfully!", "success");
+      } else {
+        throw new Error("No enhanced prompt received");
+      }
+    } catch (error) {
+      console.error("Enhancement failed:", error);
+      if (axios.isAxiosError(error)) {
+        showToast(
+          error.response?.data?.message ||
+            "Failed to enhance prompt. Please try again.",
+          "error"
+        );
+      } else {
+        showToast("Failed to enhance prompt. Please try again.", "error");
+      }
+    } finally {
+      setIsEnhancing(false);
+    }
   };
 
   const handleCopyClick = () => {
     // Copy prompt to clipboard
     if (prompt) {
       navigator.clipboard.writeText(prompt);
-      console.log("Prompt copied to clipboard!");
+      showToast("Prompt copied to clipboard!", "success");
+    } else {
+      showToast("No prompt to copy", "error");
     }
   };
 
@@ -38,17 +84,32 @@ const PromptHero = () => {
       />
 
       <div className="content-stretch flex gap-[6px] items-center justify-end relative shrink-0 w-full">
-        <div className="bg-[rgba(255,255,255,0.1)] box-border content-stretch flex gap-[10px] items-center justify-start p-[6px] relative rounded-[8px] shrink-0 transition-all duration-300 hover:bg-[rgba(255,255,255,0.2)] hover:scale-105 cursor-pointer group/magic">
+        <div
+          className={`bg-[rgba(255,255,255,0.1)] box-border content-stretch flex gap-[10px] items-center justify-start p-[6px] relative rounded-[8px] shrink-0 transition-all duration-300 ${
+            isEnhancing
+              ? "cursor-not-allowed opacity-50"
+              : "hover:bg-[rgba(255,255,255,0.2)] hover:scale-105 cursor-pointer"
+          } group/magic`}
+        >
           <div
             aria-hidden="true"
             className="absolute border border-[rgba(255,255,255,0.1)] border-solid inset-0 pointer-events-none rounded-[8px] transition-all duration-300 group-hover/magic:border-[rgba(255,255,255,0.2)]"
           />
           <button
             onClick={handleMagicClick}
-            className="relative shrink-0 size-[16px] transition-all duration-300 hover:scale-110"
-            title="Enhance prompt with AI"
+            disabled={isEnhancing}
+            className={`relative shrink-0 size-[16px] transition-all duration-300 ${
+              isEnhancing ? "cursor-not-allowed" : "hover:scale-110"
+            }`}
+            title={
+              isEnhancing ? "Enhancing prompt..." : "Enhance prompt with AI"
+            }
           >
-            <MagicWandIcon width={16} height={16} color="white" />
+            {isEnhancing ? (
+              <Loader size="small" color="white" />
+            ) : (
+              <MagicWandIcon width={16} height={16} color="white" />
+            )}
           </button>
         </div>
 

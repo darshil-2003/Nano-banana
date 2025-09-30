@@ -282,43 +282,25 @@ export const VectorIcon: React.FC<IconProps> = () => (
 );
 export const DownloadIcon: React.FC<IconProps> = () => (
   <svg
-    width="61"
-    height="60"
-    viewBox="0 0 61 60"
+    width="27"
+    height="26"
+    viewBox="0 0 27 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect
-      x="0.333252"
-      width="60"
-      height="60"
-      rx="30"
-      fill="white"
-      fillOpacity="0.1"
-    />
-    <rect
-      x="0.622141"
-      y="0.288889"
-      width="59.4222"
-      height="59.4222"
-      rx="29.7111"
+    <path
+      d="M3.58301 18.417C3.58301 19.4245 3.58301 19.9282 3.69376 20.3415C3.99427 21.463 4.8703 22.3391 5.99185 22.6396C6.40514 22.7503 6.90887 22.7503 7.91634 22.7503H18.7497C19.7572 22.7503 20.2609 22.7503 20.6742 22.6396C21.7957 22.3391 22.6718 21.463 22.9723 20.3415C23.083 19.9282 23.083 19.4245 23.083 18.417"
       stroke="white"
-      strokeOpacity="0.2"
-      strokeWidth="0.577778"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
     <path
-      d="M20.583 35.417C20.583 36.4245 20.583 36.9282 20.6938 37.3415C20.9943 38.463 21.8703 39.3391 22.9919 39.6396C23.4051 39.7503 23.9089 39.7503 24.9163 39.7503H35.7497C36.7572 39.7503 37.2609 39.7503 37.6742 39.6396C38.7957 39.3391 39.6718 38.463 39.9723 37.3415C40.083 36.9282 40.083 36.4245 40.083 35.417"
+      d="M18.2081 12.4586C18.2081 12.4586 14.6177 17.3336 13.3329 17.3336C12.0483 17.3336 8.45801 12.4586 8.45801 12.4586M13.3329 16.2503V3.25024"
       stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M35.2081 29.4586C35.2081 29.4586 31.6177 34.3336 30.3329 34.3336C29.0483 34.3336 25.458 29.4586 25.458 29.4586M30.3329 33.2503V20.2502"
-      stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
   </svg>
 );
@@ -368,54 +350,26 @@ export const CheckIcon: React.FC<IconProps> = ({
 };
 export const CloseIcon: React.FC<IconProps> = () => (
   <svg
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <foreignObject x="-20" y="-20" width="72" height="72">
-      <div
-        style={{
-          backdropFilter: "blur(10px)",
-          clipPath: "url(#bgblur_0_117_1077_clip_path)",
-          height: "100%",
-          width: "100%",
-        }}
-      ></div>
-    </foreignObject>
-    <g data-figma-bg-blur-radius="20">
-      <rect width="32" height="32" rx="16" fill="black" fill-opacity="0.4" />
-      <rect
-        x="0.25"
-        y="0.25"
-        width="31.5"
-        height="31.5"
-        rx="15.75"
-        stroke="white"
-        stroke-opacity="0.2"
-        stroke-width="0.5"
-      />
-      <path
-        d="M11.7573 11.7574L20.2426 20.2426"
-        stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M11.7574 20.2426L20.2427 11.7574"
-        stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </g>
-    <defs>
-      <clipPath id="bgblur_0_117_1077_clip_path" transform="translate(20 20)">
-        <rect width="32" height="32" rx="16" />
-      </clipPath>
-    </defs>
+    <path
+      d="M7.75732 7.75736L16.2426 16.2426"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M7.75739 16.2426L16.2427 7.75736"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
   </svg>
 );
 // Export all icons
