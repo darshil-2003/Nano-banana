@@ -62,7 +62,7 @@ const Features = () => {
       className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32"
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.2 }}
       variants={staggerContainer}
     >
       {/* Header Section */}
@@ -70,6 +70,8 @@ const Features = () => {
         <motion.div
           className="inline-flex items-center gap-2 bg-[#16101c] border border-[#9e67fa] rounded-full px-[17px] py-[3px] mb-4 shadow-[0px_0px_8px_0px_rgba(79,70,229,0.05)]"
           variants={fadeInUp}
+          initial="initial"
+          animate="animate"
         >
           <span className="text-[14px] font-medium bg-gradient-to-b from-[#ecebfe] to-[#8d8d98] bg-clip-text text-transparent">
             Our Features
@@ -78,12 +80,16 @@ const Features = () => {
         <motion.h2
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[52px] font-semibold leading-tight mb-4 px-4 sm:px-0"
           variants={fadeInUp}
+          initial="initial"
+          animate="animate"
         >
           Powerful Features for Effortless Creation
         </motion.h2>
         <motion.p
           className="text-white/50 text-sm sm:text-base md:text-lg xl:text-[16px] tracking-[0.36px] max-w-4xl mx-auto px-4 sm:px-0"
           variants={fadeInUp}
+          initial="initial"
+          animate="animate"
         >
           We&apos;ve designed photoeditbytext to combine simplicity with power.
           Enjoy effortless editing, professional-quality results, and
@@ -102,9 +108,6 @@ const Features = () => {
               key={feature.id}
               className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.12)] rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[40px]"
               variants={staggerItem}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="flex flex-col lg:flex-row h-full">
                 {/* Content Section */}

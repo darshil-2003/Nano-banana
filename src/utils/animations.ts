@@ -4,13 +4,13 @@ import { Variants } from "framer-motion";
 export const fadeInUp: Variants = {
   initial: {
     opacity: 0,
-    y: 60,
+    y: 30,
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -25,7 +25,7 @@ export const fadeInDown: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -40,7 +40,7 @@ export const fadeInLeft: Variants = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -55,7 +55,7 @@ export const fadeInRight: Variants = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -68,7 +68,7 @@ export const fadeIn: Variants = {
   animate: {
     opacity: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -83,7 +83,7 @@ export const scaleIn: Variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
@@ -93,8 +93,8 @@ export const staggerContainer: Variants = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.05,
+      staggerChildren: 0.03,
+      delayChildren: 0.03,
     },
   },
 };
@@ -102,13 +102,13 @@ export const staggerContainer: Variants = {
 export const staggerItem: Variants = {
   initial: {
     opacity: 0,
-    y: 20,
+    y: 10,
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.25,
       ease: "easeOut",
     },
   },
