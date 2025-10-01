@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { fadeInDown, fadeInLeft } from "@/utils/animations";
-import { NanoBananaIcon } from "@/icons";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import Image from "next/image";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,7 +35,7 @@ const Header = () => {
   }, [mobileMenuOpen]);
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-[9998] border-b  border-white/5  sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300 mx-5 sm:mx-0 ${
+      className={`fixed top-0 left-0 right-0 z-[9998] border-b  border-white/5  sm:px-6 lg:px-16 xl:px-[222px] py-3 sm:py-[18px] transition-all duration-300   ${
         isScrolled
           ? "bg-[#161617]/60 backdrop-blur-xl border-white/10"
           : "bg-transparent"
@@ -44,16 +44,28 @@ const Header = () => {
       initial="initial"
       animate="animate"
     >
-      <div className="flex items-center  relative z-[9999] justify-between">
+      <div className="flex items-center  relative z-[9999] justify-between mx-5 sm:mx-0">
         <motion.div
           className="flex items-center gap-2 sm:gap-3"
           variants={fadeInLeft}
         >
-          <NanoBananaIcon
-            width={24}
-            height={24}
-            className="sm:w-8 sm:h-8 text-[#ece5ff]"
-          />
+          <div className="flex w-[42px] h-[42px] justify-center items-center flex-shrink-0">
+            <Image
+              src="/images/inspiration/Logo.png"
+              alt="Logo"
+              width={42}
+              height={42}
+              className="object-contain"
+              priority
+              unoptimized
+              onError={(e) => {
+                console.error("Logo failed to load:", e);
+              }}
+              onLoad={() => {
+                console.log("Logo loaded successfully");
+              }}
+            />
+          </div>
           <span className="text-base sm:text-lg lg:text-[25px] font-bold text-[#ece5ff] w-[120px] sm:w-[150px] lg:w-[170px]">
             Photoeditbytext
           </span>

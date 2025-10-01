@@ -6,3 +6,5 @@ export type { CreationShowcaseProps } from "./CreationShowcase/CreationShowcaseI
 
 export { default as Toast } from "./Toast";
 export { default as Loader } from "./Loader";
+export { default as LottieAnimation } from "./LottieAnimation";
+export { default as MyLottieAnimation } from "./LottieAnimation/MyLottieAnimation";

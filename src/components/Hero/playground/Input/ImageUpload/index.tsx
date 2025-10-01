@@ -68,7 +68,7 @@ const ImageUpload = () => {
 
   return (
     <div
-      className={`bg-[rgba(255,255,255,0.02)] box-border content-stretch flex flex-col h-[200px] items-center justify-between p-[16px] relative rounded-[24px] shrink-0 w-full transition-all duration-300 ${
+      className={`bg-[rgba(255,255,255,0.02)] box-border content-stretch flex flex-col h-[160px] xs:h-[180px] sm:h-[200px] md:h-[220px] items-center justify-between p-[12px] xs:p-[14px] sm:p-[16px] relative rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] shrink-0 w-full transition-all duration-300 ${
         isProcessing
           ? "cursor-not-allowed opacity-50"
           : "hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(235,240,255,0.2)] cursor-pointer"
@@ -80,7 +80,7 @@ const ImageUpload = () => {
     >
       <div
         aria-hidden="true"
-        className="absolute border-2 border-[rgba(235,240,255,0.1)] border-dashed inset-0 pointer-events-none rounded-[24px] transition-all duration-300 group-hover:border-[rgba(235,240,255,0.2)]"
+        className="absolute border-2 border-[rgba(235,240,255,0.1)] border-dashed inset-0 pointer-events-none rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] transition-all duration-300 group-hover:border-[rgba(235,240,255,0.2)]"
       />
 
       {selectedImage ? (
@@ -90,52 +90,56 @@ const ImageUpload = () => {
             src={URL.createObjectURL(selectedImage)}
             alt="Background image"
             fill
-            className="relative inset-0 rounded-[24px] object-fit blur-[6px] z-0"
+            className="relative inset-0 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] object-fit blur-[6px] z-0"
+            priority
+            unoptimized
           />
 
           {/* Normal Selected Image in center */}
-          <div className="absolute w-1/2 h-full mx-auto z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute w-40 xs:w-48 sm:w-56 md:w-60 h-full mx-auto z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Image
               src={URL.createObjectURL(selectedImage)}
               alt="Selected image"
               fill
-              className=" object-contain"
+              className="object-fit"
+              priority
+              unoptimized
             />
 
             {/* Loading Overlay */}
             {isProcessing && (
-              <div className="absolute inset-0 z-40 rounded-[16px] bg-black/50 flex items-center gap-2 justify-center animate-pulse">
-                <Loader size="big" color="white" />
+              <div className="absolute inset-0 z-40 rounded-[16px]  flex items-center gap-2 justify-center animate-pulse">
+                <Loader size="h-10 w-10" color="white" />
                 <p className="text-white text-lg">Processing...</p>
               </div>
             )}
 
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-2 -right-15 sm:-right-35 lg:-right-27 text-white bg-black/30 rounded-[10px] w-8 h-8 flex items-center justify-center text-sm font-bold transition-colors z-50 shadow-lg"
+              className="absolute top-1 xs:top-2 -right-8 xs:-right-12 sm:-right-16 md:-right-20 lg:-right-24 text-white bg-black/30 rounded-[8px] xs:rounded-[10px] w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs xs:text-sm font-bold transition-colors z-50 shadow-lg"
             >
-              <CloseIcon />
+              <CloseIcon width={24} height={24} />
             </button>
           </div>
         </>
       ) : (
-        <div className="content-stretch flex flex-col gap-[4px] items-center justify-start relative shrink-0 top-10">
-          <div className="content-stretch flex flex-col gap-[8px] items-center justify-center relative shrink-0 w-full">
-            <div className="relative shrink-0 size-[24px]">
+        <div className="content-stretch flex flex-col gap-[4px] items-center justify-start relative shrink-0 top-6 xs:top-8 sm:top-10">
+          <div className="content-stretch flex flex-col gap-[6px] xs:gap-[8px] items-center justify-center relative shrink-0 w-full">
+            <div className="relative shrink-0 size-[20px] xs:size-[22px] sm:size-[24px]">
               <UploadIcon
                 width={24}
                 height={24}
-                className="w-6 h-6 text-white/60"
+                className="w-5 h-5 xs:w-5.5 xs:h-5.5 sm:w-6 sm:h-6 text-white/60"
               />
             </div>
-            <div className="flex flex-col font-['Mona_Sans:Regular',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[16px] text-[rgba(255,255,255,0.6)] text-center text-nowrap">
-              <p className="leading-[24px] whitespace-pre">
+            <div className="flex flex-col font-['Mona_Sans:Regular',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] xs:text-[15px] sm:text-[16px] text-[rgba(255,255,255,0.6)] text-center text-nowrap">
+              <p className="leading-[20px] xs:leading-[22px] sm:leading-[24px] whitespace-pre">
                 Click to upload or drag image here
               </p>
             </div>
           </div>
-          <div className="flex flex-col font-['Mona_Sans:Regular',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[12px] text-[rgba(255,255,255,0.6)] text-center text-nowrap">
-            <p className="leading-[18px] whitespace-pre">
+          <div className="flex flex-col font-['Mona_Sans:Regular',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[10px] xs:text-[11px] sm:text-[12px] text-[rgba(255,255,255,0.6)] text-center text-nowrap">
+            <p className="leading-[14px] xs:leading-[16px] sm:leading-[18px] whitespace-pre">
               JPG, PNG, WebP supported
             </p>
           </div>

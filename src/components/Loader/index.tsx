@@ -3,7 +3,7 @@
 import { twMerge } from "tailwind-merge";
 
 export interface LoaderProps extends React.SVGProps<SVGSVGElement> {
-  size?: "big" | "small";
+  size?: "big" | "small" | string;
   color?: string;
 }
 
@@ -17,7 +17,7 @@ const Loader = ({ size = "big", color = "white", ...props }: LoaderProps) => {
       {...props}
       className={twMerge(
         `flex-shrink-0 ${
-          size === "small" ? "h-4 w-4" : "h-12 w-12"
+          size === "small" ? "h-4 w-4" : size === "big" ? "h-12 w-12" : size
         } animate-spin`,
         props.className
       )}
