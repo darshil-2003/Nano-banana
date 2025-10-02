@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { FantasyShowcase } from "@/components";
 import CreationShowcase from "@/components/CreationShowcase";
-import { pageVariants, pageTransition } from "@/utils/animations";
+import { pageVariants } from "@/utils/animations";
 
 import Footer from "@/components/Footer";
 import HowItWorks from "@/components/HowItWorks";

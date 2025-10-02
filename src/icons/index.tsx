@@ -401,7 +401,6 @@ export const CompareCloseIcon: React.FC<IconProps> = ({
   className = "",
   width = 20,
   height = 23,
-  color = "white",
 }) => (
   <svg
     width={width}
@@ -421,7 +420,6 @@ export const RegenerateIcon: React.FC<IconProps> = ({
   className = "",
   width = 20,
   height = 20,
-  color = "white",
 }) => (
   <svg
     width={width}

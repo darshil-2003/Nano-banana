@@ -1,69 +1,32 @@
 "use client";
 
 import { MagicWandIcon, DuplicateIcon } from "@/icons";
-import React, { useState } from "react";
-import { useGenerate } from "@/contexts/GenerateContext";
-import { useToast } from "@/contexts/ToastContext";
+import React from "react";
+import { usePrompt } from "@/hooks/usePrompt";
+import { useToast } from "@/hooks/useToast";
 import Loader from "@/components/Loader";
-import axios from "axios";
 
 const PromptHero = () => {
-  const { prompt, setPrompt } = useGenerate();
+  const { prompt, setPrompt, isEnhancing, enhancePrompt, copyPrompt } =
+    usePrompt();
   const { showToast } = useToast();
-  const [isEnhancing, setIsEnhancing] = useState(false);
 
   const handleMagicClick = async () => {
-    if (!prompt.trim()) {
-      showToast("Please enter a prompt to enhance", "error");
-      return;
-    }
-
-    setIsEnhancing(true);
-
     try {
-      const response = await axios.post(
-        "https://api.chromastudio.ai/prompt-enhancer",
-        {
-          prompt: prompt.trim(),
-          toolType: "textToImage",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.enhancedPrompt) {
-        setPrompt(response.data.enhancedPrompt);
-        showToast("Prompt enhanced successfully!", "success");
-      } else {
-        throw new Error("No enhanced prompt received");
-      }
+      await enhancePrompt();
+      // No toast for enhancement, only for errors in console
     } catch (error) {
-      console.error("Enhancement failed:", error);
-      if (axios.isAxiosError(error)) {
-        showToast(
-          error.response?.data?.message ||
-            "Failed to enhance prompt. Please try again.",
-          "error"
-        );
-      } else {
-        showToast("Failed to enhance prompt. Please try again.", "error");
-      }
-    } finally {
-      setIsEnhancing(false);
+      console.error("Failed to enhance prompt:", error);
+      // No toast for enhancement errors
     }
   };
 
   const handleCopyClick = () => {
-    // Copy prompt to clipboard
-    if (prompt) {
-      navigator.clipboard.writeText(prompt);
+    const success = copyPrompt();
+    if (success) {
       showToast("Prompt copied to clipboard!", "success");
-    } else {
-      showToast("No prompt to copy", "error");
     }
+    // No error toast if nothing to copy
   };
 
   return (

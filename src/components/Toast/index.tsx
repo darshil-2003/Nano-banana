@@ -48,15 +48,19 @@ const Toast: React.FC<ToastProps> = ({
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 transform ${
+      className={`fixed top-20 right-4 z-[9999] px-4 py-3 rounded-lg shadow-lg transition-all duration-300 transform ${
         isAnimating ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-      } ${getToastStyles()}`}
+      } ${getToastStyles()} max-w-[calc(100vw-2rem)]`}
+      style={{ maxWidth: "400px" }}
     >
       <div className="flex items-center gap-2">
-        <span className="font-medium">{message}</span>
+        <span className="font-medium text-sm sm:text-base break-words">
+          {message}
+        </span>
         <button
           onClick={onClose}
-          className="ml-2 text-white/80 hover:text-white transition-colors"
+          className="ml-2 text-white/80 hover:text-white transition-colors text-xl leading-none"
+          aria-label="Close toast"
         >
           ×
         </button>

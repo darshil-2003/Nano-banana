@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useGenerate } from "@/contexts/GenerateContext";
+import { useGenerate } from "@/hooks/useGenerate";
 import Loader from "@/components/Loader";
 
 const GenerateButton = () => {
@@ -12,9 +12,19 @@ const GenerateButton = () => {
     generationState.status === "running";
   const isDisabled = isLoading;
 
+  const handleClick = async () => {
+    try {
+      await handleGenerate();
+      // No toast here - will show toast when generation completes successfully
+    } catch (error) {
+      console.error("Generation failed:", error);
+      // No error toast, errors are shown in the UI
+    }
+  };
+
   return (
     <button
-      onClick={handleGenerate}
+      onClick={handleClick}
       disabled={isDisabled}
       className={`box-border content-stretch flex gap-[8px] xs:gap-[9px] sm:gap-[10px] h-[48px] xs:h-[52px] sm:h-[56px] items-center justify-center overflow-clip px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[9px] sm:py-[10px] relative rounded-[80px] xs:rounded-[90px] sm:rounded-[99px] shrink-0 w-full transition-all duration-300 ${
         isDisabled

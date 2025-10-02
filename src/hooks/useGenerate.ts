@@ -1,59 +1,32 @@
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-} from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { useCallback } from "react";
+import {
+  selectedImageAtom,
+  promptAtom,
+  generationStateAtom,
+  viewModeAtom,
+  toastsAtom,
+  isComparingAtom,
+  ToastMessage,
+} from "@/store/atoms";
 import {
   generateImage,
   uploadImageToUrl,
   checkJobStatus,
-  GenerationState,
 } from "@/services/imageGeneration";
 
-interface GenerateContextType {
-  prompt: string;
-  setPrompt: (prompt: string) => void;
-  selectedModel: string;
-  setSelectedModel: (model: string) => void;
-  selectedImage: File | null;
-  setSelectedImage: (image: File | null) => void;
-  selectedImageUrl: string;
-  setSelectedImageUrl: (url: string) => void;
-  generationState: GenerationState;
-  setGenerationState: (state: GenerationState) => void;
-  handleGenerate: () => Promise<void>;
-  resetGeneration: () => void;
-  isComparing: boolean;
-  setIsComparing: (comparing: boolean) => void;
-  handleRegenerate: () => Promise<void>;
-  handleDownload: (imageUrl: string) => void;
-}
-
-const GenerateContext = createContext<GenerateContextType | undefined>(
-  undefined
-);
-
 export const useGenerate = () => {
-  const context = useContext(GenerateContext);
-  if (context === undefined) {
-    throw new Error("useGenerate must be used within a GenerateProvider");
-  }
-  return context;
-};
-
-export const GenerateProvider = ({ children }: { children: ReactNode }) => {
-  const [prompt, setPrompt] = useState("");
-  const [selectedModel, setSelectedModel] = useState("nano-banana-edit-i2i");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
-  const [isComparing, setIsComparing] = useState(false);
-  const [generationState, setGenerationState] = useState<GenerationState>({
-    status: "idle",
-  });
+  const [generationState, setGenerationState] = useAtom(generationStateAtom);
+  const [, setToasts] = useAtom(toastsAtom);
+  const [viewMode, setViewMode] = useAtom(viewModeAtom);
+  const [, setSelectedImage] = useAtom(selectedImageAtom);
+  const [, setPrompt] = useAtom(promptAtom);
+  const [, setIsComparing] = useAtom(isComparingAtom);
+  const selectedImage = useAtomValue(selectedImageAtom);
+  const prompt = useAtomValue(promptAtom);
+  const selectedModel = "nano-banana-edit-i2i"; // Fixed model
 
   const handleGenerate = useCallback(async () => {
     console.log(
@@ -64,13 +37,11 @@ export const GenerateProvider = ({ children }: { children: ReactNode }) => {
     );
 
     if (!prompt.trim()) {
-      alert("Please enter a prompt");
-      return;
+      throw new Error("Please enter a prompt");
     }
 
     if (!selectedImage) {
-      alert("Please select an image");
-      return;
+      throw new Error("Please select an image");
     }
 
     try {
@@ -79,7 +50,6 @@ export const GenerateProvider = ({ children }: { children: ReactNode }) => {
 
       // Upload image first
       const imageUrl = await uploadImageToUrl(selectedImage);
-      setSelectedImageUrl(imageUrl);
       console.log("Image URL for generation:", imageUrl);
 
       // Generate image
@@ -133,6 +103,17 @@ export const GenerateProvider = ({ children }: { children: ReactNode }) => {
               status: "completed",
               result: statusResult.result,
             });
+            // Show success toast
+            const id = Math.random().toString(36).substr(2, 9);
+            const newToast: ToastMessage = {
+              id,
+              message: "Image generated successfully!",
+              type: "success",
+              duration: 3000,
+            };
+            setToasts((prev) => [...prev, newToast]);
+            // Switch to output view when generation completes
+            setViewMode("output");
           } else if (statusResult.status === "failed") {
             throw new Error(statusResult.error || "Job failed");
           } else {
@@ -160,18 +141,41 @@ export const GenerateProvider = ({ children }: { children: ReactNode }) => {
         error: error instanceof Error ? error.message : "Generation failed",
       });
     }
-  }, [prompt, selectedImage, selectedModel]);
+  }, [
+    prompt,
+    selectedImage,
+    selectedModel,
+    setGenerationState,
+    setToasts,
+    setViewMode,
+  ]);
 
   const resetGeneration = useCallback(() => {
+    // Complete reset - clear everything
     setGenerationState({ status: "idle" });
-  }, []);
+    setViewMode("input");
+  }, [setGenerationState, setViewMode]);
 
-  const handleRegenerate = useCallback(async () => {
-    // Reset compare state
-    setIsComparing(false);
-    // Reset generation state to idle (keep selected image and prompt)
+  const handleNewGeneration = useCallback(() => {
+    // Complete reset - clear everything including input fields
     setGenerationState({ status: "idle" });
-  }, []);
+    setViewMode("input");
+    setSelectedImage(null);
+    setPrompt("");
+    setIsComparing(false);
+  }, [
+    setGenerationState,
+    setViewMode,
+    setSelectedImage,
+    setPrompt,
+    setIsComparing,
+  ]);
+
+  const handleRegenerate = useCallback(() => {
+    // Reset generation state and switch to input mode (keep selected image and prompt)
+    setGenerationState({ status: "idle" });
+    setViewMode("input");
+  }, [setGenerationState, setViewMode]);
 
   const handleDownload = useCallback((imageUrl: string) => {
     if (!imageUrl) return;
@@ -214,28 +218,15 @@ export const GenerateProvider = ({ children }: { children: ReactNode }) => {
       });
   }, []);
 
-  const value: GenerateContextType = {
-    prompt,
-    setPrompt,
-    selectedModel,
-    setSelectedModel,
-    selectedImage,
-    setSelectedImage,
-    selectedImageUrl,
-    setSelectedImageUrl,
+  return {
     generationState,
     setGenerationState,
     handleGenerate,
     resetGeneration,
-    isComparing,
-    setIsComparing,
+    handleNewGeneration,
     handleRegenerate,
     handleDownload,
+    viewMode,
+    setViewMode,
   };
-
-  return (
-    <GenerateContext.Provider value={value}>
-      {children}
-    </GenerateContext.Provider>
-  );
 };

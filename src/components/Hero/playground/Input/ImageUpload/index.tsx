@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useHandleFile } from "@/hooks/useHandleFile";
-import { useGenerate } from "@/contexts/GenerateContext";
+import { useSelectedImage } from "@/hooks/useSelectedImage";
 import { UploadIcon, CloseIcon } from "@/icons";
 
 import Loader from "@/components/Loader";
 
-const ImageUpload = () => {
+const ImageUpload = React.memo(function ImageUpload() {
   const { dragActive, setDragActive, handleDrag } = useHandleFile();
-  const { selectedImage, setSelectedImage } = useGenerate();
+  const [selectedImage, setSelectedImage] = useSelectedImage();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const validateImage = (file: File): boolean => {
@@ -90,7 +90,7 @@ const ImageUpload = () => {
             src={URL.createObjectURL(selectedImage)}
             alt="Background image"
             fill
-            className="relative inset-0 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] object-fit blur-[6px] z-0"
+            className="relative inset-0 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] object-cover blur-[6px] z-0"
             priority
             unoptimized
           />
@@ -113,14 +113,16 @@ const ImageUpload = () => {
                 <p className="text-white text-lg">Processing...</p>
               </div>
             )}
-
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-1 xs:top-2 -right-8 xs:-right-12 sm:-right-16 md:-right-20 lg:-right-24 text-white bg-black/30 rounded-[8px] xs:rounded-[10px] w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs xs:text-sm font-bold transition-colors z-50 shadow-lg"
-            >
-              <CloseIcon width={24} height={24} />
-            </button>
           </div>
+
+          {/* Close button positioned at the rightmost of the upload area */}
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-2 xs:top-2.5 sm:top-3 right-2 xs:right-2.5 sm:right-3 z-20 flex w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 px-1.5 xs:px-2 py-1 xs:py-1.5 justify-center items-center gap-1 rounded-lg xs:rounded-xl sm:rounded-xl border border-white/20 bg-black/40 backdrop-blur-[10px] text-white transition-colors hover:bg-black/50"
+            title="Remove Image"
+          >
+            <CloseIcon width={32} height={32} />
+          </button>
         </>
       ) : (
         <div className="content-stretch flex flex-col gap-[4px] items-center justify-start relative shrink-0 top-6 xs:top-8 sm:top-10">
@@ -155,6 +157,6 @@ const ImageUpload = () => {
       />
     </div>
   );
-};
+});
 
 export default ImageUpload;
