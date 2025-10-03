@@ -28,13 +28,6 @@ export const useGenerate = () => {
   const { showToast } = useToast();
 
   const handleGenerate = useCallback(async () => {
-    console.log(
-      "Generate clicked - prompt:",
-      prompt,
-      "selectedImage:",
-      selectedImage
-    );
-
     // Check for missing requirements and show appropriate toasts
     if (!prompt.trim() && !selectedImage) {
       showToast("Please select a file and enter a prompt", "error", 4000);
@@ -57,7 +50,6 @@ export const useGenerate = () => {
 
       // Upload image first
       const imageUrl = await uploadImageToUrl(selectedImage);
-      console.log("Image URL for generation:", imageUrl);
 
       // Generate image
       const result = await generateImage({
@@ -77,17 +69,12 @@ export const useGenerate = () => {
         },
       });
 
-      console.log("API Response:", result);
-      console.log("API Response data:", result.data);
-      console.log("API Response data keys:", Object.keys(result.data || {}));
-
       // Try different possible field names for the job ID
       const jobId =
         result.data?.taskId ||
         result.data?.jobId ||
         result.data?.id ||
         result.data?.task_id;
-      console.log("Job ID:", jobId);
 
       if (!jobId) {
         console.error(

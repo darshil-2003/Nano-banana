@@ -61,9 +61,7 @@ const Header = () => {
               onError={(e) => {
                 console.error("Logo failed to load:", e);
               }}
-              onLoad={() => {
-                console.log("Logo loaded successfully");
-              }}
+              onLoad={() => {}}
             />
           </div>
           <span className="text-base sm:text-lg lg:text-[25px] font-bold text-[#ece5ff] w-[120px] sm:w-[150px] lg:w-[170px]">

@@ -52,11 +52,6 @@ export const generateImage = async (
   request: ImageGenerationRequest
 ): Promise<ImageGenerationResponse> => {
   try {
-    console.log(
-      "Sending image generation request:",
-      JSON.stringify(request, null, 2)
-    );
-
     const response = await axios.post(
       "https://api.chromastudio.ai/image-gen",
       request,
@@ -68,10 +63,6 @@ export const generateImage = async (
         },
       }
     );
-
-    console.log("Raw API response:", response);
-    console.log("Raw API response data:", response.data);
-    console.log("Raw API response status:", response.status);
 
     return {
       success: true,
@@ -131,20 +122,14 @@ export const getUploadUrl = async (
       fileName
     )}&projectId=faceswapper`;
 
-    console.log("Requesting upload URL:", url);
-
     const response = await axios.get(url, {
       headers: {
         Accept: "application/json, text/plain, */*",
       },
     });
 
-    console.log("Upload URL API response:", response.data);
-    console.log("Response status:", response.status);
-
     // The API returns the upload URL directly as a string, not as a JSON object
     const uploadUrl = response.data;
-    console.log("Direct upload URL:", uploadUrl);
 
     return {
       uploadUrl: uploadUrl,
@@ -171,25 +156,15 @@ export const uploadImageToUrl = async (file: File): Promise<string> => {
     // Generate unique filename
     const timestamp = Date.now();
     const fileName = `media/${timestamp}-${file.name}`;
-    console.log("Generated filename:", fileName);
 
     // Get upload URL
     const uploadResponse = await getUploadUrl(fileName);
-    console.log("Upload response received:", uploadResponse);
 
     const { uploadUrl } = uploadResponse;
-    console.log("Extracted uploadUrl:", uploadUrl);
 
     if (!uploadUrl) {
       throw new Error("No upload URL received from API");
     }
-
-    console.log("Uploading file to:", uploadUrl);
-    console.log("File details:", {
-      name: file.name,
-      type: file.type,
-      size: file.size,
-    });
 
     // Upload file to the URL
     await axios.put(uploadUrl, file, {
@@ -198,14 +173,11 @@ export const uploadImageToUrl = async (file: File): Promise<string> => {
       },
     });
 
-    console.log("File uploaded successfully to:", uploadUrl);
-
     // Construct the actual image URL
     // Remove the signed parameters to get the base URL
     const url = new URL(uploadUrl);
     const baseUrl = `${url.protocol}//${url.hostname}${url.pathname}`;
 
-    console.log("Constructed base image URL:", baseUrl);
     return baseUrl;
   } catch (error) {
     console.error("Upload failed:", error);
