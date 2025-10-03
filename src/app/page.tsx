@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { FantasyShowcase } from "@/components";
-import CreationShowcase from "@/components/creationShowcase";
+import CreationShowcase from "@/components/CreationShowcase";
 import { pageVariants } from "@/utils/animations";
 
 import Footer from "@/components/footer";
-import HowItWorks from "@/components/abc";
+import HowItWorks from "@/components/howItWorks";
 import HeroSection from "@/components/heroSection";
 import Features from "@/components/features";
 import Faq from "@/components/faq";
