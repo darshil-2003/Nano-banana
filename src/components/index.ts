@@ -5,4 +5,4 @@ export { default as CreationShowcase } from "./CreationShowcase/CreationShowcase
 export type { CreationShowcaseProps } from "./CreationShowcase/CreationShowcaseItem";
 
 export { default as Toast } from "./toast";
-export { default as Loader } from "./loader";
+export { default as Loader } from "./abc";
