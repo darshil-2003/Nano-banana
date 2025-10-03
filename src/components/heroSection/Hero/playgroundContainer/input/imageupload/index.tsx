@@ -6,7 +6,7 @@ import { useHandleFile } from "@/hooks/useHandleFile";
 import { useSelectedImage } from "@/hooks/useSelectedImage";
 import { UploadIcon, CloseIcon } from "@/icons";
 
-import Loader from "@/components/Loader";
+import Loader from "@/components/loader";
 
 const ImageUpload = React.memo(function ImageUpload() {
   const { dragActive, setDragActive, handleDrag } = useHandleFile();
