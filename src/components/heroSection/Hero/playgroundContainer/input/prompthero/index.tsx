@@ -3,7 +3,7 @@
 import { MagicWandIcon, DuplicateIcon } from "@/icons";
 import React from "react";
 import { usePrompt } from "@/hooks/usePrompt";
-import Loader from "@/components/abc";
+import Loader from "@/components/loader";
 
 const PromptHero = () => {
   const { prompt, setPrompt, isEnhancing, enhancePrompt, copyPrompt } =

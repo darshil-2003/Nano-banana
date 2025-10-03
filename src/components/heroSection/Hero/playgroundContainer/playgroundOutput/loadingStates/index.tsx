@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Loader from "@/components/abc";
+import Loader from "@/components/loader";
 
 interface LoadingStatesProps {
   generationState: {
