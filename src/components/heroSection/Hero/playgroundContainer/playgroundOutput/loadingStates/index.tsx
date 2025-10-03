@@ -7,7 +7,10 @@ import Loader from "@/components/Loader";
 interface LoadingStatesProps {
   generationState: {
     status: string;
-    result?: string | Array<{ image?: string; url?: string }> | { image?: string; url?: string };
+    result?:
+      | string
+      | Array<{ image?: string; url?: string }>
+      | { image?: string; url?: string };
     error?: string;
   };
   selectedImage: File | null;
