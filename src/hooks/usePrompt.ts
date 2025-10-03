@@ -4,10 +4,12 @@ import { useAtom } from "jotai";
 import { useCallback } from "react";
 import axios from "axios";
 import { promptAtom, isEnhancingAtom } from "@/store/atoms";
+import { useToast } from "@/hooks/useToast";
 
 export const usePrompt = () => {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [isEnhancing, setIsEnhancing] = useAtom(isEnhancingAtom);
+  const { showToast } = useToast();
 
   const enhancePrompt = useCallback(async (): Promise<string | null> => {
     if (!prompt.trim()) {
@@ -54,10 +56,11 @@ export const usePrompt = () => {
   const copyPrompt = useCallback((): boolean => {
     if (prompt) {
       navigator.clipboard.writeText(prompt);
+      showToast("Prompt copied to clipboard! 📋", "success", 2000);
       return true;
     }
     return false;
-  }, [prompt]);
+  }, [prompt, showToast]);
 
   return {
     prompt,

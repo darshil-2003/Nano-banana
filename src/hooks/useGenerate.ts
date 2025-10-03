@@ -1,32 +1,31 @@
 "use client";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback } from "react";
 import {
   selectedImageAtom,
   promptAtom,
   generationStateAtom,
   viewModeAtom,
-  toastsAtom,
   isComparingAtom,
-  ToastMessage,
 } from "@/store/atoms";
 import {
   generateImage,
   uploadImageToUrl,
   checkJobStatus,
 } from "@/services/imageGeneration";
+import { useToast } from "@/hooks/useToast";
 
 export const useGenerate = () => {
   const [generationState, setGenerationState] = useAtom(generationStateAtom);
-  const [, setToasts] = useAtom(toastsAtom);
   const [viewMode, setViewMode] = useAtom(viewModeAtom);
-  const [, setSelectedImage] = useAtom(selectedImageAtom);
-  const [, setPrompt] = useAtom(promptAtom);
-  const [, setIsComparing] = useAtom(isComparingAtom);
+  const setSelectedImage = useSetAtom(selectedImageAtom);
+  const setPrompt = useSetAtom(promptAtom);
+  const setIsComparing = useSetAtom(isComparingAtom);
   const selectedImage = useAtomValue(selectedImageAtom);
   const prompt = useAtomValue(promptAtom);
   const selectedModel = "nano-banana-edit-i2i"; // Fixed model
+  const { showToast } = useToast();
 
   const handleGenerate = useCallback(async () => {
     console.log(
@@ -36,12 +35,20 @@ export const useGenerate = () => {
       selectedImage
     );
 
+    // Check for missing requirements and show appropriate toasts
+    if (!prompt.trim() && !selectedImage) {
+      showToast("Please select a file and enter a prompt", "error", 4000);
+      return;
+    }
+
     if (!prompt.trim()) {
-      throw new Error("Please enter a prompt");
+      showToast("Please enter a prompt", "error", 4000);
+      return;
     }
 
     if (!selectedImage) {
-      throw new Error("Please select an image");
+      showToast("Please select a file", "error", 4000);
+      return;
     }
 
     try {
@@ -104,14 +111,7 @@ export const useGenerate = () => {
               result: statusResult.result,
             });
             // Show success toast
-            const id = Math.random().toString(36).substr(2, 9);
-            const newToast: ToastMessage = {
-              id,
-              message: "Image generated successfully!",
-              type: "success",
-              duration: 3000,
-            };
-            setToasts((prev) => [...prev, newToast]);
+            showToast("Image generated successfully! 🎉", "success", 3000);
             // Switch to output view when generation completes
             setViewMode("output");
           } else if (statusResult.status === "failed") {
@@ -122,13 +122,13 @@ export const useGenerate = () => {
           }
         } catch (error) {
           console.error("Job status check failed:", error);
+          const errorMessage =
+            error instanceof Error ? error.message : "Job status check failed";
           setGenerationState({
             status: "failed",
-            error:
-              error instanceof Error
-                ? error.message
-                : "Job status check failed",
+            error: errorMessage,
           });
+          showToast(`Image generation failed: ${errorMessage}`, "error", 4000);
         }
       };
 
@@ -146,7 +146,7 @@ export const useGenerate = () => {
     selectedImage,
     selectedModel,
     setGenerationState,
-    setToasts,
+    showToast,
     setViewMode,
   ]);
 
@@ -177,46 +177,69 @@ export const useGenerate = () => {
     setViewMode("input");
   }, [setGenerationState, setViewMode]);
 
-  const handleDownload = useCallback((imageUrl: string) => {
-    if (!imageUrl) return;
+  const handleDownload = useCallback(
+    (imageUrl: string) => {
+      if (!imageUrl) return;
 
-    // Always fetch and convert to blob to ensure direct download
-    fetch(imageUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.blob();
+      // Add cache-busting parameter to disable caching
+      const cacheBustingUrl = `${imageUrl}${
+        imageUrl.includes("?") ? "&" : "?"
+      }_t=${Date.now()}`;
+
+      // Always fetch and convert to blob to ensure direct download with cache disabled
+      fetch(cacheBustingUrl, {
+        cache: "no-cache",
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
       })
-      .then((blob) => {
-        // Create blob URL and download
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `generated-image-${Date.now()}.png`;
-        link.style.display = "none";
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.blob();
+        })
+        .then((blob) => {
+          // Create blob URL and download
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `generated-image-${Date.now()}.png`;
+          link.style.display = "none";
 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
 
-        // Clean up the blob URL
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Download failed:", error);
-        // Fallback: try direct download with target="_blank" to force download
-        const link = document.createElement("a");
-        link.href = imageUrl;
-        link.download = `generated-image-${Date.now()}.png`;
-        link.target = "_blank";
-        link.style.display = "none";
+          // Clean up the blob URL
+          window.URL.revokeObjectURL(url);
 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-  }, []);
+          // Show success toast
+          showToast("Image downloaded successfully! 📥", "success", 3000);
+        })
+        .catch((error) => {
+          console.error("Download failed:", error);
+          showToast("Download failed. Please try again. ❌", "error", 4000);
+
+          // Fallback: try direct download with target="_blank" to force download (with cache busting)
+          const fallbackUrl = `${imageUrl}${
+            imageUrl.includes("?") ? "&" : "?"
+          }_t=${Date.now()}`;
+          const link = document.createElement("a");
+          link.href = fallbackUrl;
+          link.download = `generated-image-${Date.now()}.png`;
+          link.target = "_blank";
+          link.style.display = "none";
+
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+    },
+    [showToast]
+  );
 
   return {
     generationState,

@@ -2,15 +2,18 @@
 
 import React from "react";
 import { useGenerate } from "@/hooks/useGenerate";
-import Loader from "@/components/Loader";
+import { useAtomValue } from "jotai";
+import { promptAtom } from "@/store/atoms";
+import Loader from "@/components/loader";
 
 const GenerateButton = () => {
   const { handleGenerate, generationState } = useGenerate();
+  const prompt = useAtomValue(promptAtom);
 
   const isLoading =
     generationState.status === "pending" ||
     generationState.status === "running";
-  const isDisabled = isLoading;
+  const isDisabled = isLoading || !prompt.trim();
 
   const handleClick = async () => {
     try {
@@ -28,7 +31,9 @@ const GenerateButton = () => {
       disabled={isDisabled}
       className={`box-border content-stretch flex gap-[8px] xs:gap-[9px] sm:gap-[10px] h-[48px] xs:h-[52px] sm:h-[56px] items-center justify-center overflow-clip px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[9px] sm:py-[10px] relative rounded-[80px] xs:rounded-[90px] sm:rounded-[99px] shrink-0 w-full transition-all duration-300 ${
         isDisabled
-          ? "bg-gray-500 cursor-not-allowed"
+          ? isLoading
+            ? "bg-gray-500 cursor-not-allowed"
+            : "bg-gray-600 cursor-not-allowed opacity-60"
           : "bg-[#9e67fa] hover:bg-[#8a5ae8] hover:scale-[1.02] hover:shadow-lg hover:shadow-[#9e67fa]/25 active:scale-[0.98] cursor-pointer"
       }`}
     >

@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "@/utils/animations";
-import HeroHeader from "./HeroHeader";
-import Playground from "./playground";
+import HeroHeader from "./heroHeader";
+import Playground from "./playgroundContainer";
 
 const Hero = () => {
   return (

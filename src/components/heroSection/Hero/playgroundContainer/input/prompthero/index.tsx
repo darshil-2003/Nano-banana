@@ -3,13 +3,11 @@
 import { MagicWandIcon, DuplicateIcon } from "@/icons";
 import React from "react";
 import { usePrompt } from "@/hooks/usePrompt";
-import { useToast } from "@/hooks/useToast";
-import Loader from "@/components/Loader";
+import Loader from "@/components/loader";
 
 const PromptHero = () => {
   const { prompt, setPrompt, isEnhancing, enhancePrompt, copyPrompt } =
     usePrompt();
-  const { showToast } = useToast();
 
   const handleMagicClick = async () => {
     try {
@@ -22,11 +20,8 @@ const PromptHero = () => {
   };
 
   const handleCopyClick = () => {
-    const success = copyPrompt();
-    if (success) {
-      showToast("Prompt copied to clipboard!", "success");
-    }
-    // No error toast if nothing to copy
+    copyPrompt();
+    // Toast is already handled in the copyPrompt function
   };
 
   return (

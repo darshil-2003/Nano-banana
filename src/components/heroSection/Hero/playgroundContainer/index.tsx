@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "./input";
-import RightPanelOutput from "./output/rightpaneloutput";
+import RightPanelOutput from "./playgroundOutput/rightPanelOutput";
 import { useViewMode } from "@/hooks/useViewMode";
 
 const Playground = () => {

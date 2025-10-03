@@ -2,16 +2,16 @@
 
 import { motion } from "framer-motion";
 import { FantasyShowcase } from "@/components";
-import CreationShowcase from "@/components/CreationShowcase";
+import CreationShowcase from "@/components/creationShowcase";
 import { pageVariants } from "@/utils/animations";
 
-import Footer from "@/components/Footer";
-import HowItWorks from "@/components/HowItWorks";
-import HeroSection from "@/components/HeroSection";
-import Features from "@/components/Features";
-import Faq from "@/components/Faq";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
+import Footer from "@/components/footer";
+import HowItWorks from "@/components/howItWorks";
+import HeroSection from "@/components/heroSection";
+import Features from "@/components/features";
+import Faq from "@/components/faq";
+import Header from "@/components/header";
+import Hero from "@/components/heroSection/Hero";
 
 export default function LandingPageV2() {
   return (

@@ -15,7 +15,7 @@ const Toast: React.FC<ToastProps> = ({
   type,
   isVisible,
   onClose,
-  duration = 3000,
+  duration = 2000,
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -36,13 +36,13 @@ const Toast: React.FC<ToastProps> = ({
   const getToastStyles = () => {
     switch (type) {
       case "success":
-        return "bg-green-500 text-white";
+        return "bg-white/10 text-white";
       case "error":
-        return "bg-red-500 text-white";
+        return "bg-white/10 text-white";
       case "info":
-        return "bg-blue-500 text-white";
+        return "bg-white/10 text-white";
       default:
-        return "bg-gray-500 text-white";
+        return "bg-white/10 text-white";
     }
   };
 
