@@ -1,5 +1,5 @@
 import React from "react";
-import CreationShowcaseItem from "./CreationShowcaseItem";
+import CreationShowcaseItem from "./creationShowcaseItem";
 
 const CreationShowcase = () => {
   return (

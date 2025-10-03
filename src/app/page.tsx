@@ -11,7 +11,7 @@ import HeroSection from "@/components/heroSection";
 import Features from "@/components/features";
 import Faq from "@/components/faq";
 import Header from "@/components/header";
-import Hero from "@/components/heroSection/Hero";
+import Hero from "@/components/heroSection/hero";
 
 export default function LandingPageV2() {
   return (
