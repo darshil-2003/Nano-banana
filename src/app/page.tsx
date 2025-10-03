@@ -6,7 +6,7 @@ import CreationShowcase from "@/components/creationShowcase";
 import { pageVariants } from "@/utils/animations";
 
 import Footer from "@/components/footer";
-import HowItWorks from "@/components/howItWorks";
+import HowItWorks from "@/components/abc";
 import HeroSection from "@/components/heroSection";
 import Features from "@/components/features";
 import Faq from "@/components/faq";
