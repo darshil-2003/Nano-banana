@@ -53,7 +53,7 @@ const CreationShowcaseItem: React.FC<CreationShowcaseProps> = ({
     },
     {
       id: "2",
-      src: "/images/inspiration/wild-west-2.png",
+      src: "/images/inspiration/wild-west-7.png",
       alt: "AI Generated Creation 2",
       rotation: -16,
       hoverRotation: -25,

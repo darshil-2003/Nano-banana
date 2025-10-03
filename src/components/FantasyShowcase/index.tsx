@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/utils/animations";
 import Image from "next/image";
+import { useToast } from "@/hooks/useToast";
 
 export interface FantasyShowcaseProps {
   className?: string;
@@ -13,6 +14,7 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
   className = "",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -72,7 +74,7 @@ const FantasyShowcase: React.FC<FantasyShowcaseProps> = ({
 
   const handleCopyPrompt = (prompt: string) => {
     navigator.clipboard.writeText(prompt);
-    // You could add a toast notification here
+    showToast("Prompt copied to clipboard! 📋", "success", 2000);
   };
 
   return (

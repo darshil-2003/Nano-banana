@@ -33,6 +33,7 @@ export const useHandleFile = () => {
   return {
     imageFile,
     dragActive,
+    setDragActive,
     handleDrag,
     handleDrop,
     handleFileInput,
