@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { useHandleFile } from "@/hooks/useHandleFile";
+import { useHandleFile } from "@/hooks/abc";
 import { useSelectedImage } from "@/hooks/useSelectedImage";
 import { UploadIcon, CloseIcon } from "@/icons";
 

@@ -8,5 +8,5 @@ export { useGenerate } from "./useGenerate";
 export { useImageUpload } from "./useImageUpload";
 
 // Utility Hooks
-export { useHandleFile } from "./useHandleFile";
+export { useHandleFile } from "./abc";
 export { useActiveSection } from "./useActiveSection";
