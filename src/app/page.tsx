@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FantasyShowcase } from "@/components";
-import CreationShowcase from "@/components/abc";
+import CreationShowcase from "@/components/creationShowcase";
 import { pageVariants } from "@/utils/animations";
 
 import Footer from "@/components/footer";
