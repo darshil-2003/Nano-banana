@@ -4,7 +4,7 @@ import React from "react";
 import { useGenerate } from "@/hooks/useGenerate";
 import { useAtomValue } from "jotai";
 import { promptAtom } from "@/store/atoms";
-import Loader from "@/components/loader";
+import Loader from "@/components/Loader";
 
 const GenerateButton = () => {
   const { handleGenerate, generationState } = useGenerate();
