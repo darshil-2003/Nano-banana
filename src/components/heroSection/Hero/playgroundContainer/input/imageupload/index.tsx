@@ -51,6 +51,8 @@ const ImageUpload = React.memo(function ImageUpload() {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       handleFileSelect(e.target.files[0]);
+      // Reset the input value to allow selecting the same file again
+      e.target.value = "";
     }
   };
 
