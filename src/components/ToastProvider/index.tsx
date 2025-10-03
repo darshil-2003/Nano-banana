@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useToast } from "@/hooks/useToast";
-import Toast from "@/components/abc";
+import Toast from "@/components/toast";
 
 export const ToastProvider = () => {
   const { toasts, removeToast } = useToast();
