@@ -45,42 +45,26 @@ const LoadingStates = ({
   if (generationState.status === "running") {
     return (
       <div className="relative w-full h-full">
-        <SkeletonLoader />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-10">
-          <Loader size="h-10 w-10" color="white" />
-          <div className="flex flex-col font-['Mona_Sans:SemiBold',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] sm:text-[16px] text-nowrap text-white text-center">
-            <p className="leading-[normal] whitespace-pre">
-              Generating your image...
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (generationState.status === "running" && selectedImage) {
-    return (
-      <>
-        {/* Background Image covering full container area - use selectedImage File object for instant display */}
-        <Image
-          src={URL.createObjectURL(selectedImage)}
-          alt="Background image"
-          fill
-          className="absolute inset-0 object-cover blur-[2px] brightness-50 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-2 xs:p-3 sm:p-4 transition-opacity duration-300"
-          onError={(e) => {
-            console.error("Processing image load error:", e);
-          }}
-          unoptimized={true}
-          priority
-        />
+        {/* Show background image if selectedImage exists */}
+        {selectedImage && (
+          <Image
+            src={URL.createObjectURL(selectedImage)}
+            alt="Background image"
+            fill
+            className="absolute inset-0 object-cover blur-[2px] brightness-50 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-2 xs:p-3 sm:p-4 transition-opacity duration-300"
+            onError={(e) => {
+              console.error("Processing image load error:", e);
+            }}
+            unoptimized={true}
+            priority
+          />
+        )}
 
         {/* Skeleton overlay for smooth transition */}
-        <div className="absolute inset-0">
-          <SkeletonLoader />
-        </div>
+        <SkeletonLoader />
 
         {/* Loading Overlay */}
-        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2 xs:gap-3 sm:gap-4 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-1 xs:p-1.5 sm:p-2">
+        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2 xs:gap-3 sm:gap-4 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-1 xs:p-1.5 sm:p-2 z-10">
           <Loader size="h-10 w-10" color="white" />
           <div className="flex flex-col font-['Mona_Sans:SemiBold',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] text-nowrap text-white text-center">
             <p className="leading-[normal] whitespace-pre">
@@ -88,7 +72,7 @@ const LoadingStates = ({
             </p>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
