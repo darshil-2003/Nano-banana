@@ -19,7 +19,7 @@ const BackgroundImage = React.memo(
           src={URL.createObjectURL(selectedImage)}
           alt="Background image"
           fill
-          className="absolute inset-0 object-cover blur-[6px] brightness-50 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] z-0"
+          className="absolute inset-0 object-cover blur-[6px] brightness-50 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] z-0 w-full h-full p-2 xs:p-3 sm:p-4"
           onError={(e) => {
             console.error("Background image load error:", e);
             setImageError(true);
