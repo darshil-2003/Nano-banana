@@ -129,15 +129,6 @@ const RightPanelOutput = () => {
                       resultUrl={resultUrl}
                       setIsComparing={setIsComparing}
                     />
-
-                    {/* Skeleton overlay during image loading */}
-                    {isImageLoading && (
-                      <LoadingStates
-                        generationState={generationState}
-                        selectedImage={selectedImage}
-                        isImageLoading={isImageLoading}
-                      />
-                    )}
                   </>
                 );
               })()}
@@ -172,50 +163,16 @@ const RightPanelOutput = () => {
           className="absolute border border-[rgba(235,240,255,0.05)] border-solid inset-0 pointer-events-none rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] "
         />
 
-        {/* Background Image Component */}
-        <BackgroundImage
-          selectedImage={selectedImage}
-          setImageError={setImageError}
-        />
-
-        {/* Full background image for running state */}
-        {generationState.status === "running" && selectedImage ? (
-          <>
-            {/* Background Image covering full container area - use selectedImage File object for instant display */}
-            <Image
-              src={URL.createObjectURL(selectedImage)}
-              alt="Background image"
-              fill
-              className="absolute inset-0 object-cover blur-[2px] brightness-50 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-2 xs:p-3 sm:p-4 transition-opacity duration-300"
-              onError={(e) => {
-                console.error("Processing image load error:", e);
-                setImageError(true);
-              }}
-              unoptimized={true}
-              priority
-            />
-
-            {/* Skeleton overlay for smooth transition */}
-            <div className="absolute inset-0">
-              <LoadingStates
-                generationState={generationState}
-                selectedImage={selectedImage}
-                isImageLoading={isImageLoading}
-              />
-            </div>
-
-            {/* Loading Overlay */}
-            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-2 xs:gap-3 sm:gap-4 rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] p-1 xs:p-1.5 sm:p-2">
-              <div className="flex flex-col font-['Mona_Sans:SemiBold',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] text-nowrap text-white text-center">
-                <p className="leading-[normal] whitespace-pre">
-                  Generating your image...
-                </p>
-              </div>
-            </div>
-          </>
-        ) : (
-          renderContent()
+        {/* Background Image Component - only show when not running */}
+        {generationState.status !== "running" && (
+          <BackgroundImage
+            selectedImage={selectedImage}
+            setImageError={setImageError}
+          />
         )}
+
+        {/* Render content based on generation state */}
+        {renderContent()}
       </div>
     </div>
   );
