@@ -163,8 +163,8 @@ const RightPanelOutput = () => {
           className="absolute border border-[rgba(235,240,255,0.05)] border-solid inset-0 pointer-events-none rounded-[16px] xs:rounded-[20px] sm:rounded-[24px] md:rounded-[32px] "
         />
 
-        {/* Background Image Component - only show when not running */}
-        {generationState.status !== "running" && (
+        {/* Background Image Component - show when image is selected */}
+        {selectedImage && (
           <BackgroundImage
             selectedImage={selectedImage}
             setImageError={setImageError}
